@@ -255,6 +255,7 @@ openrr-plugin = {{ path = "{0}/openrr-plugin" }}
     );
     let lib_rs = r#"
 use arci::DummyJointTrajectoryClient;
+use openrr_plugin::JointTrajectoryClientProxy;
 use serde::Deserialize;
 
 openrr_plugin::export_plugin!(TestPlugin);
@@ -269,10 +270,10 @@ impl openrr_plugin::Plugin for TestPlugin {
     fn new_joint_trajectory_client(
         &self,
         args: String,
-    ) -> Result<Option<Box<dyn arci::JointTrajectoryClient>>, arci::Error> {
+    ) -> Result<Option<JointTrajectoryClientProxy>, arci::Error> {
         let config: TestClientConfig =
             serde_json::from_str(&args).map_err(|e| arci::Error::Other(e.into()))?;
-        Ok(Some(Box::new(DummyJointTrajectoryClient::new(config.joint_names))))
+        Ok(Some(JointTrajectoryClientProxy::new(DummyJointTrajectoryClient::new(config.joint_names))))
     }
 }
 

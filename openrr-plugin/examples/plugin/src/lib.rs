@@ -2,7 +2,10 @@ use std::{sync::Mutex, time::Duration};
 
 use arci::{DummyLocalization, DummyMoveBase, DummyNavigation, Error, TrajectoryPoint, WaitFuture};
 use openrr_client::PrintSpeaker;
-use openrr_plugin::Plugin;
+use openrr_plugin::{
+    GamepadProxy, JointTrajectoryClientProxy, LocalizationProxy, MoveBaseProxy, NavigationProxy,
+    Plugin, SpeakerProxy,
+};
 use serde::Deserialize;
 
 openrr_plugin::export_plugin!(MyPlugin);
@@ -17,43 +20,39 @@ impl Plugin for MyPlugin {
     fn new_joint_trajectory_client(
         &self,
         args: String,
-    ) -> Result<Option<Box<dyn arci::JointTrajectoryClient>>, arci::Error> {
+    ) -> Result<Option<JointTrajectoryClientProxy>, arci::Error> {
         let config: MyClientConfig =
             serde_json::from_str(&args).map_err(|e| arci::Error::Other(e.into()))?;
         let dof = config.joint_names.len();
-        Ok(Some(Box::new(MyJointTrajectoryClient {
-            joint_names: config.joint_names,
-            joint_positions: Mutex::new(vec![0.0; dof]),
-        })))
+        Ok(Some(JointTrajectoryClientProxy::new(
+            MyJointTrajectoryClient {
+                joint_names: config.joint_names,
+                joint_positions: Mutex::new(vec![0.0; dof]),
+            },
+        )))
     }
 
-    fn new_speaker(&self, _args: String) -> Result<Option<Box<dyn arci::Speaker>>, arci::Error> {
-        Ok(Some(Box::new(PrintSpeaker::default())))
+    fn new_speaker(&self, _args: String) -> Result<Option<SpeakerProxy>, arci::Error> {
+        Ok(Some(SpeakerProxy::new(PrintSpeaker::default())))
     }
 
-    fn new_move_base(&self, _args: String) -> Result<Option<Box<dyn arci::MoveBase>>, arci::Error> {
-        Ok(Some(Box::new(DummyMoveBase::default())))
+    fn new_move_base(&self, _args: String) -> Result<Option<MoveBaseProxy>, arci::Error> {
+        Ok(Some(MoveBaseProxy::new(DummyMoveBase::default())))
     }
 
-    fn new_navigation(
-        &self,
-        _args: String,
-    ) -> Result<Option<Box<dyn arci::Navigation>>, arci::Error> {
-        Ok(Some(Box::new(DummyNavigation::default())))
+    fn new_navigation(&self, _args: String) -> Result<Option<NavigationProxy>, arci::Error> {
+        Ok(Some(NavigationProxy::new(DummyNavigation::default())))
     }
 
-    fn new_localization(
-        &self,
-        _args: String,
-    ) -> Result<Option<Box<dyn arci::Localization>>, arci::Error> {
-        Ok(Some(Box::new(DummyLocalization::default())))
+    fn new_localization(&self, _args: String) -> Result<Option<LocalizationProxy>, arci::Error> {
+        Ok(Some(LocalizationProxy::new(DummyLocalization::default())))
     }
 
     #[cfg(unix)]
-    fn new_gamepad(&self, _args: String) -> Result<Option<Box<dyn arci::Gamepad>>, arci::Error> {
-        Ok(Some(
-            Box::new(arci_gamepad_keyboard::KeyboardGamepad::new()),
-        ))
+    fn new_gamepad(&self, _args: String) -> Result<Option<GamepadProxy>, arci::Error> {
+        Ok(Some(GamepadProxy::new(
+            arci_gamepad_keyboard::KeyboardGamepad::new(),
+        )))
     }
 }
 

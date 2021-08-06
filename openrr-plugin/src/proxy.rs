@@ -853,47 +853,31 @@ where
         &self,
         args: RString,
     ) -> RResult<ROption<JointTrajectoryClientProxy>> {
-        ROk(
-            rtry!(Plugin::new_joint_trajectory_client(self, args.into()))
-                .map(JointTrajectoryClientProxy::new)
-                .into(),
-        )
+        ROk(rtry!(Plugin::new_joint_trajectory_client(self, args.into())).into())
     }
 
     fn new_speaker(&self, args: RString) -> RResult<ROption<SpeakerProxy>> {
-        ROk(rtry!(Plugin::new_speaker(self, args.into()))
-            .map(SpeakerProxy::new)
-            .into())
+        ROk(rtry!(Plugin::new_speaker(self, args.into())).into())
     }
 
     fn new_move_base(&self, args: RString) -> RResult<ROption<MoveBaseProxy>> {
-        ROk(rtry!(Plugin::new_move_base(self, args.into()))
-            .map(MoveBaseProxy::new)
-            .into())
+        ROk(rtry!(Plugin::new_move_base(self, args.into())).into())
     }
 
     fn new_navigation(&self, args: RString) -> RResult<ROption<NavigationProxy>> {
-        ROk(rtry!(Plugin::new_navigation(self, args.into()))
-            .map(NavigationProxy::new)
-            .into())
+        ROk(rtry!(Plugin::new_navigation(self, args.into())).into())
     }
 
     fn new_localization(&self, args: RString) -> RResult<ROption<LocalizationProxy>> {
-        ROk(rtry!(Plugin::new_localization(self, args.into()))
-            .map(LocalizationProxy::new)
-            .into())
+        ROk(rtry!(Plugin::new_localization(self, args.into())).into())
     }
 
     fn new_transform_resolver(&self, args: RString) -> RResult<ROption<TransformResolverProxy>> {
-        ROk(rtry!(Plugin::new_transform_resolver(self, args.into()))
-            .map(TransformResolverProxy::new)
-            .into())
+        ROk(rtry!(Plugin::new_transform_resolver(self, args.into())).into())
     }
 
     fn new_gamepad(&self, args: RString) -> RResult<ROption<GamepadProxy>> {
-        ROk(rtry!(Plugin::new_gamepad(self, args.into()))
-            .map(GamepadProxy::new)
-            .into())
+        ROk(rtry!(Plugin::new_gamepad(self, args.into())).into())
     }
 }
 

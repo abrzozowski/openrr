@@ -1,3 +1,5 @@
+use openrr_plugin::{MoveBaseProxy, NavigationProxy};
+
 use crate::{Ros2CmdVelMoveBase, Ros2CmdVelMoveBaseConfig, Ros2Navigation, Ros2NavigationConfig};
 
 openrr_plugin::export_plugin!(Ros2Plugin {});
@@ -9,20 +11,20 @@ impl openrr_plugin::Plugin for Ros2Plugin {
         "arci-ros2-plugin".into()
     }
 
-    fn new_move_base(&self, args: String) -> Result<Option<Box<dyn arci::MoveBase>>, arci::Error> {
+    fn new_move_base(&self, args: String) -> Result<Option<MoveBaseProxy>, arci::Error> {
         let config: Ros2CmdVelMoveBaseConfig =
             toml::from_str(&args).map_err(anyhow::Error::from)?;
         let ctx = r2r::Context::create().unwrap();
-        Ok(Some(Box::new(Ros2CmdVelMoveBase::new(ctx, &config.topic))))
+        Ok(Some(MoveBaseProxy::new(Ros2CmdVelMoveBase::new(
+            ctx,
+            &config.topic,
+        ))))
     }
 
-    fn new_navigation(
-        &self,
-        args: String,
-    ) -> Result<Option<Box<dyn arci::Navigation>>, arci::Error> {
+    fn new_navigation(&self, args: String) -> Result<Option<NavigationProxy>, arci::Error> {
         let config: Ros2NavigationConfig = toml::from_str(&args).map_err(anyhow::Error::from)?;
         let ctx = r2r::Context::create().unwrap();
-        Ok(Some(Box::new(Ros2Navigation::new(
+        Ok(Some(NavigationProxy::new(Ros2Navigation::new(
             ctx,
             &config.action_name,
         ))))
