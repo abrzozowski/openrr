@@ -828,7 +828,6 @@ pub(crate) type PluginTraitObject = RPluginTrait_TO<RBox<()>>;
 
 #[sabi_trait]
 pub(crate) trait RPluginTrait: Send + Sync + 'static {
-    fn name(&self) -> RString;
     fn new_joint_trajectory_client(
         &self,
         args: RString,
@@ -845,10 +844,6 @@ impl<P> RPluginTrait for P
 where
     P: ?Sized + Plugin,
 {
-    fn name(&self) -> RString {
-        Plugin::name(self).into()
-    }
-
     fn new_joint_trajectory_client(
         &self,
         args: RString,

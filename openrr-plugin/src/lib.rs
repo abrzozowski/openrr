@@ -39,9 +39,6 @@ use crate::proxy::{
 /// pub struct MyPlugin;
 ///
 /// impl Plugin for MyPlugin {
-///     fn name(&self) -> String {
-///         "MyPlugin".into()
-///     }
 /// }
 /// ```
 #[macro_export]
@@ -65,11 +62,6 @@ macro_rules! export_plugin {
 
 /// The plugin trait.
 pub trait Plugin: Send + Sync + 'static {
-    /// Returns the name of this plugin.
-    ///
-    /// NOTE: This is *not* a unique identifier.
-    fn name(&self) -> String;
-
     /// Creates a new instance of [`arci::JointTrajectoryClient`] with the specified arguments.
     fn new_joint_trajectory_client(
         &self,
@@ -148,13 +140,6 @@ impl PluginProxy {
         Ok(plugin)
     }
 
-    /// Returns the name of this plugin.
-    ///
-    /// NOTE: This is *not* a unique identifier.
-    pub fn name(&self) -> String {
-        self.0.name().into()
-    }
-
     /// Creates a new instance of [`arci::JointTrajectoryClient`] with the specified arguments.
     pub fn new_joint_trajectory_client(
         &self,
@@ -219,9 +204,7 @@ impl PluginProxy {
 
 impl fmt::Debug for PluginProxy {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        f.debug_struct("PluginProxy")
-            .field("name", &self.name())
-            .finish()
+        f.debug_struct("PluginProxy").finish()
     }
 }
 
