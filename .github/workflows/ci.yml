@@ -23,33 +23,12 @@ defaults:
     shell: bash
 
 jobs:
-  windows:
-    name: Build on Windows
-    runs-on: windows-latest
-    timeout-minutes: 60
-    steps:
-      - uses: actions/checkout@v3
-      - uses: dtolnay/rust-toolchain@stable
-      - uses: Swatinem/rust-cache@v2
-      - uses: taiki-e/install-action@protoc
-      - run: cargo build
-
-  macos:
-    name: Build on MacOS
-    runs-on: macos-latest
-    timeout-minutes: 60
-    steps:
-      - uses: actions/checkout@v3
-      - uses: dtolnay/rust-toolchain@stable
-      - uses: Swatinem/rust-cache@v2
-      - uses: taiki-e/install-action@protoc
-        # https://github.com/actions/runner-images/pull/7125
-      - run: brew install pkg-config
-      - run: cargo build
-
   build:
-    name: Build on Linux
-    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@v3
@@ -57,12 +36,20 @@ jobs:
       - uses: Swatinem/rust-cache@v2
       - uses: taiki-e/install-action@protoc
       - run: ci/ubuntu-setup-lld.sh
+        if: startsWith(matrix.os, 'ubuntu')
       - run: ci/ubuntu-install-dependencies.sh
+        if: startsWith(matrix.os, 'ubuntu')
+        # https://github.com/actions/runner-images/pull/7125
+      - run: brew install pkg-config
+        if: startsWith(matrix.os, 'macos')
       - run: cargo build
 
   test:
-    name: Test Suite
-    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@v3
@@ -70,7 +57,12 @@ jobs:
       - uses: Swatinem/rust-cache@v2
       - uses: taiki-e/install-action@protoc
       - run: ci/ubuntu-setup-lld.sh
+        if: startsWith(matrix.os, 'ubuntu')
       - run: ci/ubuntu-install-dependencies.sh
+        if: startsWith(matrix.os, 'ubuntu')
+        # https://github.com/actions/runner-images/pull/7125
+      - run: brew install pkg-config
+        if: startsWith(matrix.os, 'macos')
       # testing arci-ros/arci-ros2 is done in ros1.yaml, ros2.yaml
       - run: cargo test --workspace --exclude arci-ros --exclude arci-ros2 --exclude openrr-apps
       - name: cargo test (openrr-apps without ros)
