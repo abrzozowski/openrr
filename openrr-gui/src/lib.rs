@@ -4,7 +4,8 @@
 #![allow(clippy::derive_partial_eq_without_eq)]
 
 mod error;
+mod ik_target_sender;
 mod joint_position_sender;
 mod velocity_sender;
 
-pub use crate::{error::*, joint_position_sender::*, velocity_sender::*};
+pub use crate::{error::*, ik_target_sender::*, joint_position_sender::*, velocity_sender::*};

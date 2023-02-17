@@ -17,11 +17,13 @@ arci.workspace = true
 eframe.workspace = true
 egui_extras = { workspace = true, features = ["image"] }
 image = { workspace = true, features = ["png"] }
+k.workspace = true
 openrr-client.workspace = true
 rand.workspace = true
 thiserror.workspace = true
 tracing.workspace = true
 urdf-rs.workspace = true
+urdf-viz.workspace = true
 
 [dev-dependencies]
 anyhow.workspace = true
