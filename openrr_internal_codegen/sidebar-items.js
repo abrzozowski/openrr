@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":[["arci_traits",""],["get_ty_path",""],["header",""],["is_result",""],["is_str",""],["main",""],["workspace_root",""],["write",""]],"mod":[["plugin","Codegen for openrr-plugin"],["rpc","Codegen for openrr-remote"]]};

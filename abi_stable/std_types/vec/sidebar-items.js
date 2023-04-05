@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":[["Drain","An Iterator returned by `RVec::drain` , which removes and yields all the elements in a range from the `RVec<T>`."],["IntoIter","An Iterator returned by `<RVec<T> as IntoIterator>::into_iter`, which yields all the elements from the `RVec<T>`, consuming it in the process."],["RVec","Ffi-safe equivalent of `std::vec::Vec`."]]};

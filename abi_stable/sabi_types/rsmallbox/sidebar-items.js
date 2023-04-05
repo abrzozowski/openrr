@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":[["RSmallBox","A box type which stores small values inline as an optimization."]]};

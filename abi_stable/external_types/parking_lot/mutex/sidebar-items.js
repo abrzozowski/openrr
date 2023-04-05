@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":[["RMutex","A mutual exclusion lock that allows dynamic mutable borrows of shared data."],["RMutexGuard","A mutex guard,which allows mutable access to the data inside an `RMutex`."]]};

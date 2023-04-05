@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":[["TD_CanDowncast","Passed to trait object constructors to make the trait object downcast capable, as opposed to `TD_Opaque`."],["TD_Opaque","Passed to trait object constructors to make it impossible to downcast the trait object, as opposed to `TD_CanDowncast`."]],"trait":[["GetUTID","Gets a function optionally returning the `UTypeId` of `T`."]]};

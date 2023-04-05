@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":[["from_slice","Parses a mesh from bytes of binary or ascii STL."]]};

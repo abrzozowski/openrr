@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":[["DebugDisplayObject","An ffi-safe equivalent of `Box<dyn Debug + Display>` (if `dyn Debug + Display` was possible)."],["HasherObject","An ffi-safe equivalent of `&mut dyn std::hash::Hasher`."]]};

@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":[["Error",""]],"fn":[["joint_position_sender","Launches GUI that send joint positions from GUI to the given `robot_client`."],["velocity_sender","Launches GUI that send base velocity from GUI to the given `move_base`."]],"struct":[["VelocitySender",""]]};

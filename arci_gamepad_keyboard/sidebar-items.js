@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":[["KeyboardGamepad","[`arci::Gamepad`] implementation for keyboard."]]};

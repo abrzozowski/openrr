@@ -1,0 +1,3 @@
+(function() {var implementors = {
+"openrr_gui":[["impl&lt;M&gt; <a class=\"trait\" href=\"eframe/epi/trait.App.html\" title=\"trait eframe::epi::App\">App</a> for <a class=\"struct\" href=\"openrr_gui/struct.VelocitySender.html\" title=\"struct openrr_gui::VelocitySender\">VelocitySender</a>&lt;M&gt;<span class=\"where fmt-newline\">where<br>&nbsp;&nbsp;&nbsp;&nbsp;M: <a class=\"trait\" href=\"arci/traits/move_base/trait.MoveBase.html\" title=\"trait arci::traits::move_base::MoveBase\">MoveBase</a> + 'static,</span>"]]
+};if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

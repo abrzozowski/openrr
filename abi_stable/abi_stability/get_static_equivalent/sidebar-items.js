@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":[["Unsized","Used to avoid a `?Sized` bound on `GetStaticEquivalent_::StaticEquivalent`."]],"trait":[["GetStaticEquivalent_","A type that stands in for `Self`,used to create a `UTypeId` for doing layout checking."]],"type":[["GetStaticEquivalent","Gets the `'static` equivalent of a type,only for use in creating a `UTypeId`."]]};

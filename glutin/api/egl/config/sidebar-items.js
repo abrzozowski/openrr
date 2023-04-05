@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":[["Config","A simple wrapper around `EGLConfig` that could be used with `EGLContext` and `EGLSurface`."]]};

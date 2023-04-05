@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":[["RawValueBox","An ffi-safe equivalent of `Box<serde_json::value::RawValue>`"],["RawValueRef","An ffi-safe equivalent of `&serde_json::value::RawValue`"]]};

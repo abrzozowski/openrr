@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"macro":[["ros_nalgebra","Generate Point/Vector3/Quaternion/Pose/Transform converter in `mod $ns`. `$ns` is the namespace for the rust messages. For example `msg`."],["ros_nalgebra_msg","Generate `impl From<<ROS_MESSAGE>` and `impl From<NALGEBRA_STRUCT>`"],["rosmsg_include","Use this macro instead of rosrust::rosmsg_include!() to generate `impl From`."]]};

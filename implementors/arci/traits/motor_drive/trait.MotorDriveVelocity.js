@@ -1,0 +1,5 @@
+(function() {var implementors = {
+"arci":[],
+"openrr_plugin":[["impl <a class=\"trait\" href=\"arci/traits/motor_drive/trait.MotorDriveVelocity.html\" title=\"trait arci::traits::motor_drive::MotorDriveVelocity\">MotorDriveVelocity</a> for <a class=\"struct\" href=\"openrr_plugin/struct.MotorDriveVelocityProxy.html\" title=\"struct openrr_plugin::MotorDriveVelocityProxy\">MotorDriveVelocityProxy</a>"]],
+"openrr_remote":[["impl <a class=\"trait\" href=\"arci/traits/motor_drive/trait.MotorDriveVelocity.html\" title=\"trait arci::traits::motor_drive::MotorDriveVelocity\">MotorDriveVelocity</a> for <a class=\"struct\" href=\"openrr_remote/struct.RemoteMotorDriveVelocitySender.html\" title=\"struct openrr_remote::RemoteMotorDriveVelocitySender\">RemoteMotorDriveVelocitySender</a>"]]
+};if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

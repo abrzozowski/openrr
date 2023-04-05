@@ -1,0 +1,126 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="   Travis CI Build Status"><meta name="keywords" content="rust, rustlang, rust-lang, generational_arena"><title>generational_arena - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../static.files/rustdoc-93196c7a1c3542a8.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../static.files/light-4743e13df3dfe8c4.css"><link rel="stylesheet" disabled href="../static.files/dark-0e1b889528bd466b.css"><link rel="stylesheet" disabled href="../static.files/ayu-65289d5d067c7c66.css"><script id="default-settings" ></script><script src="../static.files/storage-d43fa987303ecbbb.js"></script><script defer src="../crates.js"></script><script defer src="../static.files/main-3367e395607fafc1.js"></script><noscript><link rel="stylesheet" href="../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc mod crate"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="logo-container" href="../generational_arena/index.html"><img class="rust-logo" src="../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><h2></h2></nav><nav class="sidebar"><a class="logo-container" href="../generational_arena/index.html"><img class="rust-logo" src="../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><h2 class="location"><a href="#">Crate generational_arena</a></h2><div class="sidebar-elems"><ul class="block"><li class="version">Version 0.2.8</li><li><a id="all-types" href="all.html">All Items</a></li></ul><section><ul class="block"><li><a href="#structs">Structs</a></li></ul></section></div></nav><main><div class="width-limiter"><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1>Crate <a class="mod" href="#">generational_arena</a><button id="copy-path" onclick="copy_path(this)" title="Copy item path to clipboard"><img src="../static.files/clipboard-7571035ce49a181d.svg" width="19" height="18" alt="Copy item path"></button></h1><span class="out-of-band"><a class="srclink" href="../src/generational_arena/lib.rs.html#1-1307">source</a> · <button id="toggle-all-docs" title="collapse all docs">[<span>&#x2212;</span>]</button></span></div><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p><a href="https://docs.rs/generational-arena/"><img src="https://docs.rs/generational-arena/badge.svg" alt="" /></a>
+<a href="https://crates.io/crates/generational-arena"><img src="https://img.shields.io/crates/v/generational-arena.svg" alt="" /></a>
+<a href="https://crates.io/crates/generational-arena"><img src="https://img.shields.io/crates/d/generational-arena.svg" alt="" /></a>
+<a href="https://travis-ci.org/fitzgen/generational-arena"><img src="https://travis-ci.org/fitzgen/generational-arena.svg?branch=master" alt="Travis CI Build Status" /></a></p>
+<p>A safe arena allocator that allows deletion without suffering from <a href="https://en.wikipedia.org/wiki/ABA_problem">the ABA
+problem</a> by using generational
+indices.</p>
+<p>Inspired by <a href="https://www.youtube.com/watch?v=aKLntZcp27M">Catherine West’s closing keynote at RustConf
+2018</a>, where these ideas
+were presented in the context of an Entity-Component-System for games
+programming.</p>
+<h3 id="what-why"><a href="#what-why">What? Why?</a></h3>
+<p>Imagine you are working with a graph and you want to add and delete individual
+nodes at a time, or you are writing a game and its world consists of many
+inter-referencing objects with dynamic lifetimes that depend on user
+input. These are situations where matching Rust’s ownership and lifetime rules
+can get tricky.</p>
+<p>It doesn’t make sense to use shared ownership with interior mutability (i.e.
+<code>Rc&lt;RefCell&lt;T&gt;&gt;</code> or <code>Arc&lt;Mutex&lt;T&gt;&gt;</code>) nor borrowed references (ie <code>&amp;'a T</code> or <code>&amp;'a mut T</code>) for structures. The cycles rule out reference counted types, and the
+required shared mutability rules out borrows. Furthermore, lifetimes are dynamic
+and don’t follow the borrowed-data-outlives-the-borrower discipline.</p>
+<p>In these situations, it is tempting to store objects in a <code>Vec&lt;T&gt;</code> and have them
+reference each other via their indices. No more borrow checker or ownership
+problems! Often, this solution is good enough.</p>
+<p>However, now we can’t delete individual items from that <code>Vec&lt;T&gt;</code> when we no
+longer need them, because we end up either</p>
+<ul>
+<li>
+<p>messing up the indices of every element that follows the deleted one, or</p>
+</li>
+<li>
+<p>suffering from the <a href="https://en.wikipedia.org/wiki/ABA_problem">ABA
+problem</a>. To elaborate further, if
+we tried to replace the <code>Vec&lt;T&gt;</code> with a <code>Vec&lt;Option&lt;T&gt;&gt;</code>, and delete an
+element by setting it to <code>None</code>, then we create the possibility for this buggy
+sequence:</p>
+<ul>
+<li>
+<p><code>obj1</code> references <code>obj2</code> at index <code>i</code></p>
+</li>
+<li>
+<p>someone else deletes <code>obj2</code> from index <code>i</code>, setting that element to <code>None</code></p>
+</li>
+<li>
+<p>a third thing allocates <code>obj3</code>, which ends up at index <code>i</code>, because the
+element at that index is <code>None</code> and therefore available for allocation</p>
+</li>
+<li>
+<p><code>obj1</code> attempts to get <code>obj2</code> at index <code>i</code>, but incorrectly is given
+<code>obj3</code>, when instead the get should fail.</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>By introducing a monotonically increasing generation counter to the collection,
+associating each element in the collection with the generation when it was
+inserted, and getting elements from the collection with the <em>pair</em> of index and
+the generation at the time when the element was inserted, then we can solve the
+aforementioned ABA problem. When indexing into the collection, if the index
+pair’s generation does not match the generation of the element at that index,
+then the operation fails.</p>
+<h3 id="features"><a href="#features">Features</a></h3>
+<ul>
+<li>Zero <code>unsafe</code></li>
+<li>Well tested, including quickchecks</li>
+<li><code>no_std</code> compatibility</li>
+<li>All the trait implementations you expect: <code>IntoIterator</code>, <code>FromIterator</code>,
+<code>Extend</code>, etc…</li>
+</ul>
+<h3 id="usage"><a href="#usage">Usage</a></h3>
+<p>First, add <code>generational-arena</code> to your <code>Cargo.toml</code>:</p>
+<div class="example-wrap"><pre class="language-toml"><code>[dependencies]
+generational-arena = &quot;0.2&quot;
+</code></pre></div>
+<p>Then, import the crate and use the
+<a href="./struct.Arena.html"><code>generational_arena::Arena</code></a> type!</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">extern crate </span>generational_arena;
+<span class="kw">use </span>generational_arena::Arena;
+
+<span class="kw">let </span><span class="kw-2">mut </span>arena = Arena::new();
+
+<span class="comment">// Insert some elements into the arena.
+</span><span class="kw">let </span>rza = arena.insert(<span class="string">&quot;Robert Fitzgerald Diggs&quot;</span>);
+<span class="kw">let </span>gza = arena.insert(<span class="string">&quot;Gary Grice&quot;</span>);
+<span class="kw">let </span>bill = arena.insert(<span class="string">&quot;Bill Gates&quot;</span>);
+
+<span class="comment">// Inserted elements can be accessed infallibly via indexing (and missing
+// entries will panic).
+</span><span class="macro">assert_eq!</span>(arena[rza], <span class="string">&quot;Robert Fitzgerald Diggs&quot;</span>);
+
+<span class="comment">// Alternatively, the `get` and `get_mut` methods provide fallible lookup.
+</span><span class="kw">if let </span><span class="prelude-val">Some</span>(genius) = arena.get(gza) {
+    <span class="macro">println!</span>(<span class="string">&quot;The gza gza genius: {}&quot;</span>, genius);
+}
+<span class="kw">if let </span><span class="prelude-val">Some</span>(val) = arena.get_mut(bill) {
+    <span class="kw-2">*</span>val = <span class="string">&quot;Bill Gates doesn&#39;t belong in this set...&quot;</span>;
+}
+
+<span class="comment">// We can remove elements.
+</span>arena.remove(bill);
+
+<span class="comment">// Insert a new one.
+</span><span class="kw">let </span>murray = arena.insert(<span class="string">&quot;Bill Murray&quot;</span>);
+
+<span class="comment">// The arena does not contain `bill` anymore, but it does contain `murray`, even
+// though they are almost certainly at the same index within the arena in
+// practice. Ambiguities are resolved with an associated generation tag.
+</span><span class="macro">assert!</span>(!arena.contains(bill));
+<span class="macro">assert!</span>(arena.contains(murray));
+
+<span class="comment">// Iterate over everything inside the arena.
+</span><span class="kw">for </span>(idx, value) <span class="kw">in </span><span class="kw-2">&amp;</span>arena {
+    <span class="macro">println!</span>(<span class="string">&quot;{:?} is at {:?}&quot;</span>, value, idx);
+}</code></pre></div>
+<h3 id="no_std"><a href="#no_std"><code>no_std</code></a></h3>
+<p>To enable <code>no_std</code> compatibility, disable the on-by-default “std” feature. This
+currently requires nightly Rust and <code>feature(alloc)</code> to get access to <code>Vec</code>.</p>
+<div class="example-wrap"><pre class="language-toml"><code>[dependencies]
+generational-arena = { version = &quot;0.2&quot;, default-features = false }
+</code></pre></div><h4 id="serialization-and-deserialization-with-serde"><a href="#serialization-and-deserialization-with-serde">Serialization and Deserialization with <code>serde</code></a></h4>
+<p>To enable serialization/deserialization support, enable the “serde” feature.</p>
+<div class="example-wrap"><pre class="language-toml"><code>[dependencies]
+generational-arena = { version = &quot;0.2&quot;, features = [&quot;serde&quot;] }
+</code></pre></div></div></details><h2 id="structs" class="small-section-header"><a href="#structs">Structs</a></h2><div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.Arena.html" title="generational_arena::Arena struct">Arena</a></div><div class="item-right docblock-short">The <code>Arena</code> allows inserting and removing elements that are referred to by
+<code>Index</code>.</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.Drain.html" title="generational_arena::Drain struct">Drain</a></div><div class="item-right docblock-short">An iterator that removes elements from the arena.</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.Index.html" title="generational_arena::Index struct">Index</a></div><div class="item-right docblock-short">An index (and generation) into an <code>Arena</code>.</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.IntoIter.html" title="generational_arena::IntoIter struct">IntoIter</a></div><div class="item-right docblock-short">An iterator over the elements in an arena.</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.Iter.html" title="generational_arena::Iter struct">Iter</a></div><div class="item-right docblock-short">An iterator over shared references to the elements in an arena.</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.IterMut.html" title="generational_arena::IterMut struct">IterMut</a></div><div class="item-right docblock-short">An iterator over exclusive references to elements in this arena.</div></div></div></section></div></main><div id="rustdoc-vars" data-root-path="../" data-static-root-path="../static.files/" data-current-crate="generational_arena" data-themes="" data-resource-suffix="" data-rustdoc-version="1.68.2 (9eb3afe9e 2023-03-27)" data-search-js="search-98d53477a794af0b.js" data-settings-js="settings-c3c521c753752a1a.js" data-settings-css="settings-08ddfdda51b8ee2e.css" ></div></body></html>

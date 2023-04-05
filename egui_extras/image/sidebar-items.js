@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":[["load_image_bytes","Load a (non-svg) image."]],"struct":[["RetainedImage","An image to be shown in egui."]]};

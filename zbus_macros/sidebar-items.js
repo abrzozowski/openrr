@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"attr":[["dbus_interface","Attribute macro for implementing a D-Bus interface."],["dbus_proxy","Attribute macro for defining D-Bus proxies (using `zbus::Proxy` and `zbus::blocking::Proxy`)."]],"derive":[["DBusError","Derive macro for implementing `zbus::DBusError` trait."]]};

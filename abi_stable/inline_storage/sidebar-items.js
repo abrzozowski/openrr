@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"mod":[["alignment","Helper types related to the alignemnt of inline storage."]],"trait":[["AlignerFor","For getting the `AlignTo*` type which aligns `Self` to `ALIGNMENT`."],["InlineStorage","Type used as the inline storage of a RSmallBox<>/NonExhaustive<>."]],"type":[["GetAlignerFor","For getting the `AlignTo*` type which aligns `T` to `ALIGNMENT`."]]};

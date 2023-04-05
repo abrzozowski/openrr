@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":[["Display","A wrapper for the `GLXDisplay`, which is basically an `XDisplay`."]]};

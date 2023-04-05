@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"mod":[["complex","The `complex` module implements a 32-bit floating point complex number."],["fft","The `fft` module implements the Fast Fourier Transform (FFT)."],["mdct","The `mdct` module implements the Modified Discrete Cosine Transform (MDCT)."]]};

@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":[["ROnceState","Describes the running state of an ROnce."]],"struct":[["ROnce","A synchronization primitive for running global initialization once."]]};

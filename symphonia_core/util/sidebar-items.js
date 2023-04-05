@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"mod":[["bits","Utilities for bit manipulation."],["clamp","Utilities for clamping numeric values to a defined range."]]};

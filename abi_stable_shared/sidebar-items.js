@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":[["mangled_root_module_loader_name","Gets the name of the static that contains the LibHeader of an abi_stable library."]],"mod":[["const_utils",""]]};

@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"mod":[["x11","Utilities to access X11 specific config properties."]]};

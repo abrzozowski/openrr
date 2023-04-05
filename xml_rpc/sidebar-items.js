@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":[["Value",""]],"externcrate":[["rouille",""]],"fn":[["from_params",""],["into_params",""]],"mod":[["client",""],["error",""],["server",""]],"struct":[["Call",""],["Fault",""],["Url","A parsed URL record."]],"type":[["Params",""],["Response",""]]};

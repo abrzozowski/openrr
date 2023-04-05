@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"mod":[["crossbeam_channel","Ffi-safe wrapper types around the crossbeam-channel channel types."],["parking_lot","Ffi-safe synchronization primitives,most of which are ffi-safe wrappers of parking_lot types"],["serde_json","Ffi-safe equivalents of `serde_json` types."]]};

@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"mod":[["id3v1","An ID3v1 metadata reader."],["id3v2","An ID3v2 metadata reader."],["itunes","iTunes metadata support."],["riff","A RIFF INFO metadata reader."],["vorbis","A Vorbic COMMENT metadata reader for FLAC or OGG formats."]]};

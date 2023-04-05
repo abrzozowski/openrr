@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":[["from_slice","Parses meshes from bytes of COLLADA text."],["from_str","Parses meshes from a string of COLLADA text."]]};

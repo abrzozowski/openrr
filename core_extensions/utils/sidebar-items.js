@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":[["impossible","Use this function to mark to the compiler that this branch is impossible."],["transmute_ignore_size","Allows transmuting between types of different sizes."],["transmute_vec","Transmutes a `Vec<T>` into a `Vec<U>`"]]};

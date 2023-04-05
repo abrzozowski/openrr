@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":[["X11VisualInfo","The X11 visual info."]],"trait":[["X11GlConfigExt","The GlConfig extension trait to get X11 specific properties from a config."]]};

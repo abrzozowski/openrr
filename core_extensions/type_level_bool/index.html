@@ -1,0 +1,64 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Type level booleans"><meta name="keywords" content="rust, rustlang, rust-lang, type_level_bool"><title>core_extensions::type_level_bool - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-93196c7a1c3542a8.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../static.files/light-4743e13df3dfe8c4.css"><link rel="stylesheet" disabled href="../../static.files/dark-0e1b889528bd466b.css"><link rel="stylesheet" disabled href="../../static.files/ayu-65289d5d067c7c66.css"><script id="default-settings" ></script><script src="../../static.files/storage-d43fa987303ecbbb.js"></script><script defer src="../../static.files/main-3367e395607fafc1.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc mod"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="logo-container" href="../../core_extensions/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><h2></h2></nav><nav class="sidebar"><a class="logo-container" href="../../core_extensions/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><h2 class="location"><a href="#">Module type_level_bool</a></h2><div class="sidebar-elems"><section><ul class="block"><li><a href="#structs">Structs</a></li><li><a href="#traits">Traits</a></li><li><a href="#types">Type Definitions</a></li></ul></section></div></nav><main><div class="width-limiter"><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1>Module <a href="../index.html">core_extensions</a>::<wbr><a class="mod" href="#">type_level_bool</a><button id="copy-path" onclick="copy_path(this)" title="Copy item path to clipboard"><img src="../../static.files/clipboard-7571035ce49a181d.svg" width="19" height="18" alt="Copy item path"></button></h1><span class="out-of-band"><a class="srclink" href="../../src/core_extensions/type_level_bool.rs.html#1-293">source</a> · <button id="toggle-all-docs" title="collapse all docs">[<span>&#x2212;</span>]</button></span></div><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>Type level booleans</p>
+<h2 id="example"><a href="#example">Example</a></h2>
+<p>Access of privileges based on renamed Boolean types.</p>
+
+<div class="example-wrap ignore"><div class='tooltip'>ⓘ</div><pre class="rust rust-example-rendered"><code><span class="kw">use </span>std::mem;
+<span class="kw">use </span>std::marker::PhantomData;
+
+<span class="kw">use </span>core_extensions::CovariantPhantom;
+
+<span class="kw">pub use </span>core_extensions::type_level_bool::{
+   Boolean <span class="kw">as </span>PrivilegeLevel,
+   False <span class="kw">as </span>Unprivileged,
+   True <span class="kw">as </span>Privileged,
+};
+
+
+<span class="attr">#[repr(C)]
+#[derive(Debug)]
+</span><span class="kw">struct </span>User&lt;P&gt;{
+   name: String,
+   privilege_level: CovariantPhantom&lt;P&gt;,
+}
+
+<span class="kw">impl</span>&lt;P: PrivilegeLevel&gt; User&lt;P&gt;{
+   <span class="kw">fn </span>new(name: String, privilege_level: P) -&gt; <span class="self">Self </span>{
+       <span class="self">Self</span>{name, privilege_level: PhantomData}
+   }
+   <span class="kw">fn </span>name(<span class="kw-2">&amp;</span><span class="self">self</span>)-&gt;<span class="kw-2">&amp;</span>str{
+       <span class="kw-2">&amp;</span><span class="self">self</span>.name
+   }
+   <span class="kw">fn </span>into_unprivileged(<span class="self">self</span>) -&gt; User&lt;Unprivileged&gt; {
+       User{name: <span class="self">self</span>.name, privilege_level: PhantomData}
+   }
+   <span class="kw">fn </span>as_unprivileged(<span class="self">self</span>: <span class="kw-2">&amp;mut </span>User&lt;P&gt;) -&gt; <span class="kw-2">&amp;mut </span>User&lt;Unprivileged&gt; {
+       <span class="comment">// Only the type parameter P changes here
+       </span><span class="kw">unsafe</span>{ mem::transmute(<span class="self">self</span>) }
+   }
+}
+
+<span class="kw">impl </span>User&lt;Privileged&gt;{
+   <span class="kw">fn </span>set_name(<span class="kw-2">&amp;mut </span><span class="self">self</span>, name: String){
+       <span class="self">self</span>.name = name;
+   }
+}
+
+<span class="kw">let </span><span class="kw-2">mut </span>user: User&lt;Privileged&gt; = User::new(<span class="string">&quot;bob&quot;</span>.into(), Privileged);
+<span class="macro">assert_eq!</span>(user.name(), <span class="string">&quot;bob&quot;</span>);
+
+user.set_name(<span class="string">&quot;paul&quot;</span>.into());
+<span class="macro">assert_eq!</span>(user.name(), <span class="string">&quot;paul&quot;</span>);
+
+{
+   <span class="kw">let </span>user: <span class="kw-2">&amp;mut </span>User&lt;Unprivileged&gt; = user.as_unprivileged();
+
+   <span class="comment">// Unprivileged Users can&#39;t change their name.
+   // user.set_name(&quot;james&quot;.into());
+
+   </span><span class="macro">assert_eq!</span>(user.name(), <span class="string">&quot;paul&quot;</span>);
+}
+
+user.set_name(<span class="string">&quot;john&quot;</span>.into());
+<span class="macro">assert_eq!</span>(user.name(), <span class="string">&quot;john&quot;</span>);
+</code></pre></div>
+</div></details><h2 id="structs" class="small-section-header"><a href="#structs">Structs</a></h2><div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.False.html" title="core_extensions::type_level_bool::False struct">False</a></div><div class="item-right docblock-short">Represents a type-level <code>false</code></div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.True.html" title="core_extensions::type_level_bool::True struct">True</a></div><div class="item-right docblock-short">Represents a type-level <code>true</code></div></div></div><h2 id="traits" class="small-section-header"><a href="#traits">Traits</a></h2><div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="trait" href="trait.Boolean.html" title="core_extensions::type_level_bool::Boolean trait">Boolean</a></div><div class="item-right docblock-short">Represents a type-level <code>bool</code></div></div></div><h2 id="types" class="small-section-header"><a href="#types">Type Definitions</a></h2><div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="type" href="type.And.html" title="core_extensions::type_level_bool::And type">And</a></div><div class="item-right docblock-short"><code>And</code>s two <a href="./trait.Boolean.html">Boolean</a>s</div></div><div class="item-row"><div class="item-left module-item"><a class="type" href="type.Not.html" title="core_extensions::type_level_bool::Not type">Not</a></div><div class="item-right docblock-short">Negates a <a href="./trait.Boolean.html">Boolean</a>.</div></div><div class="item-row"><div class="item-left module-item"><a class="type" href="type.Or.html" title="core_extensions::type_level_bool::Or type">Or</a></div><div class="item-right docblock-short"><code>Or</code>s two <a href="./trait.Boolean.html">Boolean</a>s</div></div><div class="item-row"><div class="item-left module-item"><a class="type" href="type.Xor.html" title="core_extensions::type_level_bool::Xor type">Xor</a></div><div class="item-right docblock-short"><code>Xor</code>s two <a href="./trait.Boolean.html">Boolean</a>s</div></div></div></section></div></main><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="core_extensions" data-themes="" data-resource-suffix="" data-rustdoc-version="1.68.2 (9eb3afe9e 2023-03-27)" data-search-js="search-98d53477a794af0b.js" data-settings-js="settings-c3c521c753752a1a.js" data-settings-css="settings-08ddfdda51b8ee2e.css" ></div></body></html>

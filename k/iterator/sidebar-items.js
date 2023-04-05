@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":[["Ancestors","Iterator for parents"],["Descendants","Iterator for children"]]};

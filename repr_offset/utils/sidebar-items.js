@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":[["moved","A helper function to force a variable to move (copy if it’s a Copy type)."]],"struct":[["MakePhantomData","Helper type to construct certain PhantomData in const fns."]],"trait":[["PointerTarget","Gets the type pointed-to by a pointer."]]};

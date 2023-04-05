@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":[["ErrorKind","A list specifying general categoires of native platform graphics interface errors."]],"struct":[["Error","The error type for all the graphics platform operations."]],"type":[["Result","A specialized [`Result`] type for graphics operations."]]};

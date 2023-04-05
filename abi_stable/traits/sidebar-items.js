@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"trait":[["IntoInner","Unwraps a type into its owned value."],["IntoOwned","For cloning a reference-like type into a (preferably ffi-safe) owned type."],["IntoReprC","Converts a `#[repr(Rust)]` type into its `#[repr(C)]` equivalent."],["IntoReprRust","Converts a `#[repr(C)]` type into its `#[repr(Rust)]` equivalent."]]};

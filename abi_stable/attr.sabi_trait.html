@@ -1,0 +1,445 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="This attribute generates an ffi-safe trait object on the trait it’s applied to."><meta name="keywords" content="rust, rustlang, rust-lang, sabi_trait"><title>sabi_trait in abi_stable - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../static.files/rustdoc-93196c7a1c3542a8.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../static.files/light-4743e13df3dfe8c4.css"><link rel="stylesheet" disabled href="../static.files/dark-0e1b889528bd466b.css"><link rel="stylesheet" disabled href="../static.files/ayu-65289d5d067c7c66.css"><script id="default-settings" ></script><script src="../static.files/storage-d43fa987303ecbbb.js"></script><script defer src="sidebar-items.js"></script><script defer src="../static.files/main-3367e395607fafc1.js"></script><noscript><link rel="stylesheet" href="../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc attr"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="logo-container" href="../abi_stable/index.html"><img class="rust-logo" src="../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><h2></h2></nav><nav class="sidebar"><a class="logo-container" href="../abi_stable/index.html"><img class="rust-logo" src="../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><div class="sidebar-elems"><h2><a href="index.html">In abi_stable</a></h2></div></nav><main><div class="width-limiter"><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1>Attribute Macro <a href="index.html">abi_stable</a>::<wbr><a class="attr" href="#">sabi_trait</a><button id="copy-path" onclick="copy_path(this)" title="Copy item path to clipboard"><img src="../static.files/clipboard-7571035ce49a181d.svg" width="19" height="18" alt="Copy item path"></button></h1><span class="out-of-band"><a class="srclink" href="../src/abi_stable_derive/lib.rs.html#35">source</a> · <button id="toggle-all-docs" title="collapse all docs">[<span>&#x2212;</span>]</button></span></div><div class="item-decl"><pre class="rust"><code>#[sabi_trait]</code></pre></div><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>This attribute generates an ffi-safe trait object on the trait it’s applied to.</p>
+<p>All items outside the list of generated items comes from <a href="./sabi_trait/index.html"><code>abi_stable::sabi_trait</code></a>.</p>
+<h2 id="supertraits"><a href="#supertraits">Supertraits.</a></h2>
+<p>By default these are the supertraits that <code>#[sabi_trait]</code> traits can have: </p>
+<ul>
+<li>
+<p>lifetimes: It can be a lifetime declared by the trait, or <code>'static</code>.</p>
+</li>
+<li>
+<p><code>Debug</code></p>
+</li>
+<li>
+<p><code>Display</code></p>
+</li>
+<li>
+<p><code>std::error::Error</code>: Written as <code>Error</code>: The <code>Error</code> methods aren’t delegated to,
+it uses the default implementation,</p>
+</li>
+<li>
+<p><code>Clone</code></p>
+</li>
+<li>
+<p><code>Send</code></p>
+</li>
+<li>
+<p><code>Sync</code></p>
+</li>
+<li>
+<p><code>Unpin</code></p>
+</li>
+</ul>
+<p>To be able to have more supertraits you must use the <code>#[sabi(use_dyntrait)]</code> helper attribute,
+which changes the underlying implementation from <a href="./sabi_trait/struct.RObject.html"><code>RObject</code></a> to <a href="./struct.DynTrait.html"><code>DynTrait</code></a>,
+allowing these supertraits: </p>
+<ul>
+<li>
+<p><code>Iterator</code>: requires the Item type to be specified.</p>
+</li>
+<li>
+<p><code>DoubleEndedIterator</code>: requires the Item type to be specified.</p>
+</li>
+<li>
+<p><code>std::fmt::Write</code>: Written as <code>FmtWrite</code></p>
+</li>
+<li>
+<p><code>std::io::Write</code>: Written as <code>IoWrite</code></p>
+</li>
+<li>
+<p><code>std::io::Seek</code>: Written as <code>IoSeek</code></p>
+</li>
+<li>
+<p><code>std::io::Read</code>: Written as <code>IoRead</code></p>
+</li>
+<li>
+<p><code>std::io::BufRead</code>: Written as <code>IoBufRead</code></p>
+</li>
+<li>
+<p><code>Eq</code></p>
+</li>
+<li>
+<p><code>PartialEq</code></p>
+</li>
+<li>
+<p><code>Ord</code></p>
+</li>
+<li>
+<p><code>PartialOrd</code></p>
+</li>
+<li>
+<p><code>Hash</code></p>
+</li>
+</ul>
+<h4 id="supertrait-extensibility"><a href="#supertrait-extensibility">Supertrait Extensibility</a></h4>
+<p>The properties described below are checked when <code>abi_stable</code> loads a dynamic library.</p>
+<p>Traits can add non-marker supertraits in minor versions without breaking ABI compatibility,
+with the (non-ABI related) caveats described in the extensibility section.</p>
+<p>Traits cannot add marker supertraits in minor versions ABI compatibly,
+because that would cause problems with thread/memory safety if allowed.
+If it were allowed,<code>!Send</code> trait objects could be passed from a binary to 
+a dynamic library(where the trait object type is <code>Send</code>),
+and that would be Undefined Behavior in many situations.</p>
+<h2 id="extensibility"><a href="#extensibility">Extensibility</a></h2>
+<p><code>#[sabi_trait]</code> trait objects are (ABI-wise) safe to extend in minor versions,
+so long as methods are always added at the end, preferably as default methods.</p>
+<p>A library will not load (through safe means) if methods are added anywhere but the end.</p>
+<p>Accidentally calling newer methods on trait objects from older versions of a
+library will cause a panic at runtime, unless it has a default implementation
+(within the trait definition that <code>#[sabi_trait]</code> can see).</p>
+<p>Panics can only happen if one loads multiple versions of a library,
+where the trait is extended in each version(without using default methods),
+and passes trait objects among those libraries.</p>
+<h2 id="generated-items"><a href="#generated-items">Generated items.</a></h2>
+<p>This is a nonexhaustive list of the items generated by the attribute,
+where <code>Trait</code> is the name of the annotated trait.</p>
+<h4 id="trait_trait"><a href="#trait_trait"><code>Trait_trait</code></a></h4>
+<p>This is the module inside of which all the items are generated.</p>
+<p>These are the items reexported from the module: </p>
+<ul>
+<li>
+<p><a href="#trait"><code>Trait</code></a>: The trait itself.</p>
+</li>
+<li>
+<p><a href="#trait_to"><code>Trait_TO</code></a>: The trait object for the trait.</p>
+</li>
+<li>
+<p><a href="#trait_cto"><code>Trait_CTO</code></a>: 
+A type alias for the trait object which is constructible in constants.</p>
+</li>
+</ul>
+<h4 id="trait_to"><a href="#trait_to"><code>Trait_TO</code></a></h4>
+<p>The ffi-safe trait object.</p>
+<p><a href="./docs/sabi_trait_inherent/index.html#methods">Its inherent methods are documented here.
+</a></p>
+<p><code>Trait_TO</code> has inherent method equivalents of the trait methods,
+only requiring the wrapped pointer to implement the trait in the individual methods
+(instead of putting those bounds in the impl block itself).</p>
+<br>
+<p>This only implements <code>Trait</code> if all the methods are callable,
+when the wrapped pointer type implements traits for these methods: </p>
+<ul>
+<li><code>&amp;self</code> method: requires <code>AsPtr&lt;PtrTarget = ()&gt;</code>.</li>
+<li><code>&amp;mut self</code> method: requires <code>AsMutPtr&lt;PtrTarget = ()&gt;</code>.</li>
+<li><code>self</code> method: requires <code>OwnedPointer&lt;PtrTarget = ()&gt;</code>.</li>
+</ul>
+<br>
+<p>Trait_TO has these generic parameters(in order): </p>
+<ul>
+<li>
+<p><code>'trait_lifetime_n</code>: The lifetime parameters of the trait, if any.</p>
+</li>
+<li>
+<p><code>'lt</code>: 
+This is the lifetime of the type that the trait object was constructed with.
+If the trait requires <code>'static</code>(in the list of supertraits),
+then it doesn’t have this lifetime parameter.</p>
+</li>
+<li>
+<p><code>Pointer</code>: 
+An pointer whose referent has been erased,
+most commonly <a href="./std_types/struct.RBox.html"><code>RBox&lt;()&gt;</code></a>/<a href="./std_types/struct.RArc.html"><code>RArc&lt;()&gt;</code></a>/<a href="./sabi_types/struct.RRef.html"><code>RRef&lt;'_, ()&gt;</code></a>/<a href="./sabi_types/struct.RMut.html"><code>RMut&lt;'_, ()&gt;</code></a>.</p>
+</li>
+<li>
+<p><code>trait_type_param_n</code>: The type parameters of the trait.</p>
+</li>
+<li>
+<p><code>trait_const_param_n</code>: The const parameters of the trait.</p>
+</li>
+<li>
+<p><code>trait_assoc_type_n</code>: The associated types of the trait.</p>
+</li>
+</ul>
+<p>A trait defined like this: <code>trait Foo&lt;'a, T, U&gt;{ type Hello; type World; }</code>,
+has this trait object: <code>Foo_TO&lt;'a, 'lt, Pointer, T, U, Hello, World&gt;</code>.</p>
+<br>
+<p>One can access the underlying implementation of the trait object through the <code>obj</code> field,
+allowing one to call these methods(a nonexhaustive list): </p>
+<ul>
+<li>
+<p><code>downcast_into</code></p>
+</li>
+<li>
+<p><code>downcast_as</code></p>
+</li>
+<li>
+<p><code>downcast_as_mut</code></p>
+</li>
+</ul>
+<p>To reconstruct <code>Trait_TO</code> from its underlying implementation,
+you can use the <code>Trait_TO::from_sabi</code> associated function.</p>
+<h4 id="trait_cto"><a href="#trait_cto">Trait_CTO</a></h4>
+<p>A type alias for the type of the trait objct that is constructible in constants,
+with the <code>from_const</code> constructor function.</p>
+<p>Constructed with <code>Trait_CTO::from_const(&amp;value)</code>.</p>
+<p>Trait_CTO has these generic parameters(in order): </p>
+<ul>
+<li>
+<p><code>'trait_lifetime_n</code>: The lifetime parameters of the trait, if any.</p>
+</li>
+<li>
+<p><code>'lt</code>: this is the lifetime of the type that the trait object was construct with.
+If the trait requires <code>'static</code>(in the list of supertraits),
+then it doesn’t have this lifetime parameter.</p>
+</li>
+<li>
+<p><code>'_ref</code>: this is the lifetime of the reference that this was constructed with.</p>
+</li>
+<li>
+<p><code>trait_type_param_n</code>: The type parameters of the trait.</p>
+</li>
+<li>
+<p><code>trait_const_param_n</code>: The const parameters of the trait.</p>
+</li>
+<li>
+<p><code>trait_assoc_type_n</code>: The associated types of the trait.</p>
+</li>
+</ul>
+<p>Example: <code>Trait_CTO&lt;'lt, 'r, u8, u64, 10, AssocFoo&gt;</code></p>
+<h4 id="trait"><a href="#trait">Trait</a></h4>
+<p>The trait is defined similarly to how it is before being transformed by the 
+<code>#[sabi_trait]</code> attribute.</p>
+<p>These are the differences: </p>
+<ul>
+<li>
+<p>If there is a by-value method, a <code>Self: Sized</code> constraint will be added automatically.</p>
+</li>
+<li>
+<p>Lifetime supertraits are stripped, because they disallow the trait object to be 
+constructed with a reference of a smaller lifetime.</p>
+</li>
+</ul>
+<h2 id="vtable-attributes"><a href="#vtable-attributes">VTable attributes</a></h2>
+<p>To pass attributes to the generated vtable you can use the <code>#[sabi(  )]</code> attributes 
+that are valid for <code>#[derive(StableAbi)]</code>.</p>
+<p><a href="./derive.StableAbi.html">Here is the documentation for the derive macro.
+</a></p>
+<h2 id="trait-attributes"><a href="#trait-attributes">Trait attributes.</a></h2>
+<p>These are attributes for the generated trait, applied on the trait(not on methods).</p>
+<h4 id="sabino_trait_impl"><a href="#sabino_trait_impl"><code>#[sabi(no_trait_impl)]</code></a></h4>
+<p>Disables the implementation of the trait for the trait object,
+you can still call the inherent versions of those methods on the trait object.</p>
+<p>This is useful to reduce compile-time overhead,
+and to allow users to declare a blanket(generic) implementation of the trait.</p>
+<h4 id="sabino_default_fallback"><a href="#sabino_default_fallback"><code>#[sabi(no_default_fallback)]</code></a></h4>
+<p>Stops using default implementation of methods (from the trait declaration) 
+as the fallback implementation of the method when it’s not in the vtable,
+because the trait object comes from a previous version of the library.</p>
+<p>By using this attribute, defaulted methods will behave the same as 
+non-defaulted methods when they don’t exist in the vtable.</p>
+<h4 id="sabidebug_print_trait"><a href="#sabidebug_print_trait"><code>#[sabi(debug_print_trait)]</code></a></h4>
+<p>Prints the output generated by the attribute macro,</p>
+<p>Note that this does not expand the output of the 
+<code>#[derive(StableAbi)]</code> attribute on the vtable.</p>
+<h4 id="sabiuse_dyntrait"><a href="#sabiuse_dyntrait"><code>#[sabi(use_dyntrait)]</code></a></h4>
+<p>Changes how the trait object is implemented to use <code>DynTrait</code> instead of <code>RObject</code>,
+this allows using more traits, with the (potential) cost of having more overhead.</p>
+<h2 id="associated-types"><a href="#associated-types">Associated types</a></h2>
+<p>The only valid way to refer to associated types in the trait declaration is with 
+<code>Self::AssocType</code> syntax.</p>
+<p>Associated types in the trait object are transformed into type parameters 
+that come after those of the trait.</p>
+<h2 id="object-safety"><a href="#object-safety">Object safety</a></h2>
+<p>Trait objects generated using this attribute have similar restrictions to built-in trait objects: </p>
+<ul>
+<li>
+<p><code>Self</code> can only be used to access associated types 
+(using the <code>Self::AssocType</code> syntax).</p>
+</li>
+<li>
+<p><code>self</code> is a valid method receiver,
+this requires that the pointer that the generated trait object wraps 
+implements <code>abi_stable::pointer_trait::OwnedPointer</code>.</p>
+</li>
+</ul>
+<h2 id="questions-and-answers"><a href="#questions-and-answers">Questions and Answers</a></h2>
+<p>**Question: ** Why does Calling from_ptr/from_value give me a expected a <code>'static</code> value error?</p>
+<p>Answer: There are 3 possible reasons</p>
+<ul>
+<li>
+<p>1: Because the trait has a <code>'static</code> supertrait bound.</p>
+</li>
+<li>
+<p>2: Because the trait has one of the comparison traits
+(<code>Eq</code>/<code>PartialEq</code>/<code>Ord</code>/<code>PartialOrd</code>)
+as supertraits.
+This requires the type to be <code>'static</code> because comparing trait objects requires 
+constructing a <code>std::any::TypeId</code>, which itself requires <code>'static</code> to be constructed.</p>
+</li>
+<li>
+<p>3: Because you passed <code>TD_CanDowncast</code> to the constructor function,
+which requires constructing a <code>std::any::TypeId</code>
+(to unerase the trait object back into the value),
+which itself requires <code>'static</code> to be constructed.</p>
+</li>
+</ul>
+<h2 id="examples"><a href="#examples">Examples</a></h2><h4 id="dictionary-trait"><a href="#dictionary-trait">Dictionary trait</a></h4>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>abi_stable::{
+    sabi_trait,
+    sabi_trait::prelude::<span class="kw-2">*</span>,
+    std_types::{RArc, RBox, RNone, ROption, RStr, RString},
+    StableAbi,
+};
+
+<span class="kw">use </span>std::{collections::HashMap, fmt::Debug};
+
+<span class="attr">#[sabi_trait]
+</span><span class="kw">pub trait </span>Dictionary: Debug + Clone {
+    <span class="kw">type </span>Value;
+
+    <span class="kw">fn </span>get(<span class="kw-2">&amp;</span><span class="self">self</span>, key: RStr&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="self">Self</span>::Value&gt;;
+
+    <span class="doccomment">/// The `#[sabi(last_prefix_field)]` attribute here means that this is the last method
+    /// that was defined in the first compatible version of the library
+    /// (0.1.0, 0.2.0, 0.3.0, 1.0.0, 2.0.0 , etc),
+    /// requiring new methods to always be added below preexisting ones.
+    ///
+    /// The `#[sabi(last_prefix_field)]` attribute would stay on this method until the library
+    /// bumps its &quot;major&quot; version,
+    /// at which point it would be moved to the last method at the time.
+    ///
+    </span><span class="attr">#[sabi(last_prefix_field)]
+    </span><span class="kw">fn </span>insert(<span class="kw-2">&amp;mut </span><span class="self">self</span>, key: RString, value: <span class="self">Self</span>::Value) -&gt; ROption&lt;<span class="self">Self</span>::Value&gt;;
+
+    <span class="doccomment">/// It&#39;s semver compatible to add defaulted methods below previously-defined ones in
+    /// minor version updates.
+    </span><span class="kw">fn </span>contains(<span class="kw-2">&amp;</span><span class="self">self</span>, key: RStr&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; bool {
+        <span class="self">self</span>.get(key).is_some()
+    }
+}
+
+
+{
+    <span class="kw">impl</span>&lt;V&gt; Dictionary <span class="kw">for </span>HashMap&lt;RString, V&gt;
+    <span class="kw">where
+        </span>V: Debug + Clone,
+    {
+        <span class="kw">type </span>Value = V;
+        <span class="kw">fn </span>get(<span class="kw-2">&amp;</span><span class="self">self</span>, key: RStr&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>V&gt; {
+            <span class="self">self</span>.get(key.as_str())
+        }
+        <span class="kw">fn </span>insert(<span class="kw-2">&amp;mut </span><span class="self">self</span>, key: RString, value: V) -&gt; ROption&lt;V&gt; {
+            <span class="self">self</span>.insert(key, value).into()
+        }
+    }
+
+    <span class="kw">let </span><span class="kw-2">mut </span>map = HashMap::&lt;RString, u32&gt;::new();
+    map.insert(<span class="string">&quot;hello&quot;</span>.into(), <span class="number">100</span>);
+    map.insert(<span class="string">&quot;world&quot;</span>.into(), <span class="number">10</span>);
+
+    {
+        <span class="comment">// This type annotation is for the reader
+        //
+        // You can unerase trait objects constructed with `TD_CanDowncast`
+        // (as opposed to `TD_Opaque`, which can&#39;t be unerased).
+        </span><span class="kw">let </span><span class="kw-2">mut </span>object: Dictionary_TO&lt;<span class="lifetime">&#39;_</span>, RBox&lt;()&gt;, u32&gt; =
+            Dictionary_TO::from_value(map.clone(), TD_CanDowncast);
+
+        <span class="macro">assert_eq!</span>(Dictionary::get(<span class="kw-2">&amp;</span>object, <span class="string">&quot;hello&quot;</span>.into()), <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="number">100</span>));
+        <span class="macro">assert_eq!</span>(object.get(<span class="string">&quot;hello&quot;</span>.into()), <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="number">100</span>)); <span class="comment">// Inherent method call
+
+        </span><span class="macro">assert_eq!</span>(Dictionary::get(<span class="kw-2">&amp;</span>object, <span class="string">&quot;world&quot;</span>.into()), <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="number">10</span>));
+        <span class="macro">assert_eq!</span>(object.get(<span class="string">&quot;world&quot;</span>.into()), <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="number">10</span>)); <span class="comment">// Inherent method call
+
+        </span>object.insert(<span class="string">&quot;what&quot;</span>.into(), <span class="number">99</span>); <span class="comment">// Inherent method call
+
+        // You can only unerase a trait object if it was constructed with `TD_CanDowncast`
+        // and it&#39;s being unerased into a type that implements `std::any::Any`.
+        </span><span class="kw">let </span>map: RBox&lt;HashMap&lt;RString, u32&gt;&gt; = object.obj.downcast_into().unwrap();
+
+        <span class="macro">assert_eq!</span>(map.get(<span class="string">&quot;hello&quot;</span>.into()), <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="number">100</span>));
+        <span class="macro">assert_eq!</span>(map.get(<span class="string">&quot;world&quot;</span>.into()), <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="number">10</span>));
+        <span class="macro">assert_eq!</span>(map.get(<span class="string">&quot;what&quot;</span>.into()), <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="number">99</span>));
+    }
+    {
+        <span class="kw">let </span>arc = RArc::new(map.clone());
+        <span class="comment">// This type annotation is for the reader
+        //
+        // You can unerase trait objects constructed with `TD_CanDowncast`
+        // (as opposed to `TD_Opaque`, which can&#39;t be unerased).
+        </span><span class="kw">let </span>object: Dictionary_TO&lt;<span class="lifetime">&#39;_</span>, RArc&lt;()&gt;, u32&gt; =
+            Dictionary_TO::from_ptr(arc, TD_CanDowncast);
+
+        <span class="macro">assert_eq!</span>(object.get(<span class="string">&quot;world&quot;</span>.into()), <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="number">10</span>));
+
+        <span class="comment">// Can&#39;t call these methods on `Dictionary_TO&lt;RArc&lt;()&gt;,..&gt;`
+        // because `RArc&lt;_&gt;` doesn&#39;t implement AsMutPtr.
+        //
+        // assert_eq!(Dictionary::get(&amp;object,&quot;hello&quot;), Some(&amp;100));
+        //
+        // object.insert(&quot;what&quot;.into(), 99);
+        // Dictionary::insert(&amp;mut object,&quot;what&quot;.into(), 99);
+
+        </span><span class="kw">let </span>map: RArc&lt;HashMap&lt;RString, u32&gt;&gt; = object.obj.downcast_into().unwrap();
+        <span class="macro">assert_eq!</span>(map.get(<span class="string">&quot;hello&quot;</span>.into()), <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="number">100</span>));
+        <span class="macro">assert_eq!</span>(map.get(<span class="string">&quot;world&quot;</span>.into()), <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="number">10</span>));
+    }
+}
+
+{
+    <span class="kw">impl </span>Dictionary <span class="kw">for </span>() {
+        <span class="kw">type </span>Value = RString;
+        <span class="kw">fn </span>get(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="kw">_</span>: RStr&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>RString&gt; {
+            <span class="prelude-val">None
+        </span>}
+        <span class="kw">fn </span>insert(<span class="kw-2">&amp;mut </span><span class="self">self</span>, <span class="kw">_</span>: RString, <span class="kw">_</span>: RString) -&gt; ROption&lt;RString&gt; {
+            RNone
+        }
+    }
+
+    <span class="comment">// This type annotation is for the reader
+    </span><span class="kw">let </span>object: Dictionary_TO&lt;<span class="lifetime">&#39;_</span>, RBox&lt;()&gt;, RString&gt; =
+        Dictionary_TO::from_value((), TD_Opaque);
+
+    <span class="macro">assert_eq!</span>(object.get(<span class="string">&quot;hello&quot;</span>.into()), <span class="prelude-val">None</span>);
+    <span class="macro">assert_eq!</span>(object.get(<span class="string">&quot;world&quot;</span>.into()), <span class="prelude-val">None</span>);
+
+    <span class="comment">// Cannot unerase trait objects created with `TD_Opaque`.
+    </span><span class="macro">assert_eq!</span>(object.obj.downcast_into::&lt;()&gt;().ok(), <span class="prelude-val">None</span>);
+}
+
+
+</code></pre></div>
+<h2 id="constructing-a-trait-object-in-a-constant"><a href="#constructing-a-trait-object-in-a-constant">Constructing a trait object in a constant</a></h2>
+<p>This shows how one can construct a <code>#[sabi_trait]</code> generated trait object in a constant/static.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code>
+<span class="kw">use </span>abi_stable::{sabi_trait, sabi_trait::TD_Opaque};
+
+<span class="attr">#[sabi_trait]
+</span><span class="kw">pub trait </span>StaticSet: Sync + Send + Debug + Clone {
+    <span class="kw">type </span>Element;
+
+    <span class="doccomment">/// Whether the set contains the key.
+    </span><span class="kw">fn </span>contains(<span class="kw-2">&amp;</span><span class="self">self</span>, key: <span class="kw-2">&amp;</span><span class="self">Self</span>::Element) -&gt; bool;
+}
+
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, T&gt; StaticSet <span class="kw">for </span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>[T]
+<span class="kw">where
+    </span>T: std::fmt::Debug + Sync + Send + std::cmp::PartialEq,
+{
+    <span class="kw">type </span>Element = T;
+
+    <span class="kw">fn </span>contains(<span class="kw-2">&amp;</span><span class="self">self</span>, key: <span class="kw-2">&amp;</span><span class="self">Self</span>::Element) -&gt; bool {
+        (<span class="kw-2">**</span><span class="self">self</span>).contains(key)
+    }
+}
+
+<span class="kw">const </span>CARDS: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>[char] =
+    <span class="kw-2">&amp;</span>[<span class="string">&#39;A&#39;</span>, <span class="string">&#39;2&#39;</span>, <span class="string">&#39;3&#39;</span>, <span class="string">&#39;4&#39;</span>, <span class="string">&#39;5&#39;</span>, <span class="string">&#39;6&#39;</span>, <span class="string">&#39;7&#39;</span>, <span class="string">&#39;8&#39;</span>, <span class="string">&#39;9&#39;</span>, <span class="string">&#39;J&#39;</span>, <span class="string">&#39;Q&#39;</span>, <span class="string">&#39;K&#39;</span>];
+
+<span class="kw">static </span>IS_CARD: StaticSet_CTO&lt;<span class="lifetime">&#39;static</span>, <span class="lifetime">&#39;static</span>, char&gt; =
+    StaticSet_CTO::from_const(<span class="kw-2">&amp;</span>CARDS, TD_Opaque);
+
+
+<span class="macro">assert!</span>(IS_CARD.contains(<span class="kw-2">&amp;</span><span class="string">&#39;A&#39;</span>));
+<span class="macro">assert!</span>(IS_CARD.contains(<span class="kw-2">&amp;</span><span class="string">&#39;4&#39;</span>));
+<span class="macro">assert!</span>(IS_CARD.contains(<span class="kw-2">&amp;</span><span class="string">&#39;7&#39;</span>));
+<span class="macro">assert!</span>(IS_CARD.contains(<span class="kw-2">&amp;</span><span class="string">&#39;9&#39;</span>));
+<span class="macro">assert!</span>(IS_CARD.contains(<span class="kw-2">&amp;</span><span class="string">&#39;J&#39;</span>));
+
+<span class="macro">assert!</span>(!IS_CARD.contains(<span class="kw-2">&amp;</span><span class="string">&#39;0&#39;</span>));
+<span class="macro">assert!</span>(!IS_CARD.contains(<span class="kw-2">&amp;</span><span class="string">&#39;1&#39;</span>));
+<span class="macro">assert!</span>(!IS_CARD.contains(<span class="kw-2">&amp;</span><span class="string">&#39;B&#39;</span>));
+
+</code></pre></div>
+</div></details></section></div></main><div id="rustdoc-vars" data-root-path="../" data-static-root-path="../static.files/" data-current-crate="abi_stable" data-themes="" data-resource-suffix="" data-rustdoc-version="1.68.2 (9eb3afe9e 2023-03-27)" data-search-js="search-98d53477a794af0b.js" data-settings-js="settings-c3c521c753752a1a.js" data-settings-css="settings-08ddfdda51b8ee2e.css" ></div></body></html>

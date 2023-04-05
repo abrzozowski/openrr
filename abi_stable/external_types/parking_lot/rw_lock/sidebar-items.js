@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":[["RReadGuard","A read guard,which allows shared access to the data inside the `RRwLock`."],["RRwLock","A read-write lock that allows dynamic mutable/shared borrows of shared data."],["RWriteGuard","A write guard,which allows mutable access to the data inside the `RRwLock`."]]};

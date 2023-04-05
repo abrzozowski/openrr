@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":[["Color","An RGBA color value, holding four floating point components."],["ColorMap",""],["ColorTheme",""]]};

@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":[["Deserializer","Our D-Bus deserialization implementation."],["Serializer","Our D-Bus serialization implementation."]]};

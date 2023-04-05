@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":[["CgiError","Error that can happen when parsing the JSON input."]],"trait":[["CgiRun",""]]};

@@ -1,0 +1,6 @@
+(function() {var implementors = {
+"arci":[],
+"arci_ros":[["impl <a class=\"trait\" href=\"arci/traits/transform_resolver/trait.TransformResolver.html\" title=\"trait arci::traits::transform_resolver::TransformResolver\">TransformResolver</a> for <a class=\"struct\" href=\"arci_ros/ros_transform_resolver/struct.RosTransformResolver.html\" title=\"struct arci_ros::ros_transform_resolver::RosTransformResolver\">RosTransformResolver</a>"]],
+"openrr_plugin":[["impl <a class=\"trait\" href=\"arci/traits/transform_resolver/trait.TransformResolver.html\" title=\"trait arci::traits::transform_resolver::TransformResolver\">TransformResolver</a> for <a class=\"struct\" href=\"openrr_plugin/struct.TransformResolverProxy.html\" title=\"struct openrr_plugin::TransformResolverProxy\">TransformResolverProxy</a>"]],
+"openrr_remote":[["impl <a class=\"trait\" href=\"arci/traits/transform_resolver/trait.TransformResolver.html\" title=\"trait arci::traits::transform_resolver::TransformResolver\">TransformResolver</a> for <a class=\"struct\" href=\"openrr_remote/struct.RemoteTransformResolverSender.html\" title=\"struct openrr_remote::RemoteTransformResolverSender\">RemoteTransformResolverSender</a>"]]
+};if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

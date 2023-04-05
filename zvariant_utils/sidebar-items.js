@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"macro":[["def_attrs","Generates one or more structures used for parsing attributes in proc macros."]],"mod":[["case","Contains utilities used to convert strings between different cases."],["macros",""]]};

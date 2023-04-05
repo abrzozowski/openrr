@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":[["next_field_offset","Calculates the offset of a field in bytes,given the previous field."]],"struct":[["GetNextFieldOffset","Calculates the offset (in bytes) of a field, with the `call` method."]]};

@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":[["measure","Measures the time taken by `f` to execute, returning a pair of `(Duration, T)`."],["try_measure","Measures the time taken by fallible function `f` to execute, returning a pair of `Result<(Duration, T), E>`, so that this function can be used in combination with `?`."]]};

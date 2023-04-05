@@ -1,0 +1,8 @@
+(function() {var implementors = {
+"arci":[],
+"arci_gamepad_gilrs":[["impl <a class=\"trait\" href=\"arci/traits/gamepad/trait.Gamepad.html\" title=\"trait arci::traits::gamepad::Gamepad\">Gamepad</a> for <a class=\"struct\" href=\"arci_gamepad_gilrs/struct.GilGamepad.html\" title=\"struct arci_gamepad_gilrs::GilGamepad\">GilGamepad</a>"]],
+"arci_gamepad_keyboard":[["impl <a class=\"trait\" href=\"arci/traits/gamepad/trait.Gamepad.html\" title=\"trait arci::traits::gamepad::Gamepad\">Gamepad</a> for <a class=\"struct\" href=\"arci_gamepad_keyboard/struct.KeyboardGamepad.html\" title=\"struct arci_gamepad_keyboard::KeyboardGamepad\">KeyboardGamepad</a>"]],
+"arci_ros":[["impl <a class=\"trait\" href=\"arci/traits/gamepad/trait.Gamepad.html\" title=\"trait arci::traits::gamepad::Gamepad\">Gamepad</a> for <a class=\"struct\" href=\"arci_ros/struct.RosJoyGamepad.html\" title=\"struct arci_ros::RosJoyGamepad\">RosJoyGamepad</a>"]],
+"openrr_plugin":[["impl <a class=\"trait\" href=\"arci/traits/gamepad/trait.Gamepad.html\" title=\"trait arci::traits::gamepad::Gamepad\">Gamepad</a> for <a class=\"struct\" href=\"openrr_plugin/struct.GamepadProxy.html\" title=\"struct openrr_plugin::GamepadProxy\">GamepadProxy</a>"]],
+"openrr_remote":[["impl <a class=\"trait\" href=\"arci/traits/gamepad/trait.Gamepad.html\" title=\"trait arci::traits::gamepad::Gamepad\">Gamepad</a> for <a class=\"struct\" href=\"openrr_remote/struct.RemoteGamepadSender.html\" title=\"struct openrr_remote::RemoteGamepadSender\">RemoteGamepadSender</a>"]]
+};if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

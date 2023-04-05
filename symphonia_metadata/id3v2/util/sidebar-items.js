@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":[["apic_picture_type_to_visual_key","Try to get a `StandardVisualKey` from the APIC picture type identifier."]]};

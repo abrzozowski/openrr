@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":[["Imdct","The Inverse Modified Discrete Transform (IMDCT)."]]};

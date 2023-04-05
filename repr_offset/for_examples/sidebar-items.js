@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":[["ReprAlign4","An example `#[repr(C, align(4))]` type"],["ReprC","An example `#[repr(C)]` type"],["ReprCNoGFO","An example `#[repr(C)]` type which doesn’t implement `GetFieldOffset`"],["ReprPacked","An example `#[repr(C, packed)]` type"],["ReprPacked2","An example `#[repr(C, packed(2))]` type."]]};

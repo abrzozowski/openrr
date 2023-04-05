@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":[["transmute_ignore_size","Allows transmuting between types of different sizes."]],"struct":[["False","Represents a type-level `false`"],["True","Represents a type-level `true`"]],"trait":[["SelfOps","Extension trait for every type."]]};

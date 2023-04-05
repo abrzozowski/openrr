@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":[["now","Get the current time from the system clock."]]};

@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":[["new_utypeid","`extern \"C\" fn` version of `UTypeId::new`."]],"struct":[["UTypeId","An ffi-safe equivalent of `std::any::TypeId` that can compare types across dynamic libraries."]]};

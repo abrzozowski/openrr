@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":[["Display","A wrapper for the `EGLDisplay` and its supported extensions."]]};

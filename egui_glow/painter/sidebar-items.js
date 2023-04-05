@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":[["clear",""]],"struct":[["CallbackFn","A callback function that can be used to compose an [`egui::PaintCallback`] for custom rendering with [`glow`]."],["Context",""],["Painter","An OpenGL painter using [`glow`]."]]};

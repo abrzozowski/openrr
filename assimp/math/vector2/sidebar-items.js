@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":[["Vector2D","Vector2D docs"]]};

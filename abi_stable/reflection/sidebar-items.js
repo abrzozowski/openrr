@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":[["ModReflMode","Whether this is a module whose definition can be reflected on at runtime,"]]};

@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":[["Error",""],["RobotCommand",""],["ShellType","Enum type to handle clap_complete::Shell"]],"fn":[["load_command_file_and_filter",""]],"struct":[["RobotCommandExecutor",""]]};

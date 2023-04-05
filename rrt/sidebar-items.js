@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":[["dual_rrt_connect","search the path from start to goal which is free, using random_sample function"],["smooth_path","select random two points, and try to connect."]]};

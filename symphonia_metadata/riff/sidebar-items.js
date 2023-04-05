@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":[["parse","Parse the RIFF INFO block into a `Tag` using the block’s identifier tag and a slice containing the block’s contents."]]};

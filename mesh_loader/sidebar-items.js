@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"mod":[["collada","COLLADA (.dae) parser."],["stl","STL (.stl) parser."]],"struct":[["Mesh","Triangle mesh"],["Scene",""]]};

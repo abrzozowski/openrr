@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":[["ParseVersionError","When the `VersionStrings` could not be converted into a `VersionNumber`."],["VersionNumber","The parsed (`<major>.<minor>.<patch>`) version number of a library."],["VersionStrings","The `<major>.<minor>.<patch>` version of a library,"]]};

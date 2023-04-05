@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":[["ArrayLen","A pair of length and an array, which is treated as a slice of `0..self.len` in all its impls."]]};

@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":[["BroadPhaseProxyHandle",""],["DBVTBroadPhase","Broad phase based on a Dynamic Bounding Volume Tree."]],"trait":[["BroadPhase","Trait all broad phase must implement."],["BroadPhaseInterferenceHandler","Proximity handling for BroadPhase updates."],["BroadPhasePairFilter","A signal handler for contact detection."]]};

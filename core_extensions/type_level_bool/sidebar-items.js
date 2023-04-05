@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":[["False","Represents a type-level `false`"],["True","Represents a type-level `true`"]],"trait":[["Boolean","Represents a type-level `bool`"]],"type":[["And","`And`s two Booleans"],["Not","Negates a Boolean."],["Or","`Or`s two Booleans"],["Xor","`Xor`s two Booleans"]]};

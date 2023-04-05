@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"mod":[["structs","Argument structs for `Importer` post-processing configuration."]],"struct":[["Importer","The `Importer` type."]]};

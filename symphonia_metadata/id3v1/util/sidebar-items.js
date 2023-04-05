@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":[["genre_name","Try to get the genre name for the ID3v1 genre index."]]};

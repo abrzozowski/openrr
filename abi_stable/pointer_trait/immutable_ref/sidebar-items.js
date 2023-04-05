@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":[["from_nonnull","Constructs this pointer from a `NonNull`."],["from_raw_ptr","Converts a raw pointer to an `T` pointer."],["to_nonnull","Converts the `from` pointer to a `NonNull`."],["to_raw_ptr","Converts the `from` pointer to a raw pointer."]]};
