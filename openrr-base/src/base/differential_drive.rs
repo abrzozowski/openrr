@@ -1,37 +1,30 @@
+use std::sync::Arc;
+
 use arci::{BaseVelocity, Error, Localization, MotorDriveVelocity, MoveBase};
 
 use crate::{base_odometry::*, robot_velocity_status::*, utils::*};
 
-#[derive(Debug, Clone)]
 pub struct DifferentialDriveHardwareParameters {
     pub wheel_radius: f64,
     pub tread_width: f64,
 }
 
-#[derive(Debug, Clone)]
-pub struct DifferentialDriveMotorController<MV: MotorDriveVelocity> {
-    pub left: MV,
-    pub right: MV,
+pub struct DifferentialDriveMotorController {
+    pub left: Arc<dyn MotorDriveVelocity>,
+    pub right: Arc<dyn MotorDriveVelocity>,
 }
 
-#[derive(Debug)]
-pub struct DifferentialDrive<MV>
-where
-    MV: MotorDriveVelocity,
-{
+pub struct DifferentialDrive {
     robot_velocity: RobotVelocityStatus,
-    controller: DifferentialDriveMotorController<MV>,
+    controller: DifferentialDriveMotorController,
     param: DifferentialDriveHardwareParameters,
     odometry: BaseOdometry,
 }
 
-impl<MV> DifferentialDrive<MV>
-where
-    MV: MotorDriveVelocity,
-{
+impl DifferentialDrive {
     pub fn new(
         param: DifferentialDriveHardwareParameters,
-        controller: DifferentialDriveMotorController<MV>,
+        controller: DifferentialDriveMotorController,
         limit_velocity: BaseVelocity,
         limit_acceleration: BaseAcceleration,
     ) -> Self {
@@ -44,10 +37,7 @@ where
     }
 }
 
-impl<MV> VelocityTransformer for DifferentialDrive<MV>
-where
-    MV: MotorDriveVelocity,
-{
+impl VelocityTransformer for DifferentialDrive {
     /// Output: left_wheel_velocity, right_wheel_velocity
     fn transform_velocity_base_to_wheel(&self, velocity: &BaseVelocity) -> Vec<f64> {
         let wheels_vel = vec![
@@ -72,10 +62,7 @@ where
     }
 }
 
-impl<MV> MoveBase for DifferentialDrive<MV>
-where
-    MV: MotorDriveVelocity,
-{
+impl MoveBase for DifferentialDrive {
     fn send_velocity(&self, velocity: &BaseVelocity) -> Result<(), Error> {
         let limited_vel = self.robot_velocity.limited_velocity(velocity);
 
@@ -115,10 +102,7 @@ where
     }
 }
 
-impl<MV> Localization for DifferentialDrive<MV>
-where
-    MV: MotorDriveVelocity,
-{
+impl Localization for DifferentialDrive {
     fn current_pose(&self, _frame_id: &str) -> Result<arci::Isometry2<f64>, Error> {
         Ok(self.odometry.current_pose())
     }
@@ -143,8 +127,8 @@ mod test {
             tread_width: 1.0,
         };
         let controller = DifferentialDriveMotorController {
-            left: DummyMotorDriveVelocity::default(),
-            right: DummyMotorDriveVelocity::default(),
+            left: Arc::new(DummyMotorDriveVelocity::default()),
+            right: Arc::new(DummyMotorDriveVelocity::default()),
         };
 
         controller.left.set_motor_velocity(1.234).unwrap();
