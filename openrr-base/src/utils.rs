@@ -1,3 +1,5 @@
+use arci::BaseVelocity;
+
 #[derive(Debug, Clone, Copy)]
 pub struct BaseVelocityTimestamped {
     pub base_velocity: BaseVelocity,
@@ -13,7 +15,6 @@ impl Default for BaseVelocityTimestamped {
     }
 }
 
-pub use arci::BaseVelocity;
 pub type BaseAcceleration = BaseVelocity;
 
 pub trait Limiter {
